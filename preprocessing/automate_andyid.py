@@ -11,10 +11,21 @@ def preprocess_data(input_path='namadataset_raw/nama_file_dataset.csv', output_p
         df = pd.read_csv(input_path)
         print("Data berhasil dimuat.")
 
-        # --- Lakukan langkah-langkah preprocessing Anda di sini ---
-        # Contoh: Membersihkan kolom, mengisi nilai NaN, encoding, scaling, dll.
-        # df['kolom_baru'] = df['kolom_lama'] * 2 
-        # df.fillna(0, inplace=True)
+        # --- Preprocessing ---
+        # 1. Handling missing values
+        for col in df.columns:
+            if df[col].dtype in ['int64', 'float64']:
+                df[col].fillna(df[col].median(), inplace=True)
+            else:
+                df[col].fillna(df[col].mode()[0] if not df[col].mode().empty else 'unknown', inplace=True)
+
+        # 2. Hapus duplikat
+        df.drop_duplicates(inplace=True)
+
+        # 3. Encoding fitur kategorikal
+        cat_cols = df.select_dtypes(include=['object']).columns
+        for col in cat_cols:
+            df[col] = pd.factorize(df[col])[0]
         
         # Pastikan direktori output ada
         output_dir = os.path.dirname(output_path)

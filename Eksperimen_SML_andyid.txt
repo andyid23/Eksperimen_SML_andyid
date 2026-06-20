@@ -1,3 +1,3 @@
 Tautan Repository GitHub untuk Kriteria 1: 
-https://github.com/NAMA_USER_ANDA/Eksperimen_SML_Nama-siswa 
+https://github.com/andyid/Eksperimen_SML_andyid 
 (Ganti NAMA_USER_ANDA dan nama repo sesuai kebutuhan)
