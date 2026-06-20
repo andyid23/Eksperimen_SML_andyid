@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-def preprocess_data(input_path='namadataset_raw/nama_file_dataset.csv', output_path='namadataset_preprocessing/processed_data.csv'):
+def preprocess_data(input_path='namadataset_raw/ai_student_impact_dataset.csv', output_path='namadataset_preprocessing/processed_data.csv'):
     """
     Fungsi untuk melakukan preprocessing data secara otomatis.
     Mengambil data dari input_path, melakukan transformasi, dan menyimpan ke output_path.
@@ -15,9 +15,9 @@ def preprocess_data(input_path='namadataset_raw/nama_file_dataset.csv', output_p
         # 1. Handling missing values
         for col in df.columns:
             if df[col].dtype in ['int64', 'float64']:
-                df[col].fillna(df[col].median(), inplace=True)
+                df[col] = df[col].fillna(df[col].median())
             else:
-                df[col].fillna(df[col].mode()[0] if not df[col].mode().empty else 'unknown', inplace=True)
+                df[col] = df[col].fillna(df[col].mode()[0] if not df[col].mode().empty else 'unknown')
 
         # 2. Hapus duplikat
         df.drop_duplicates(inplace=True)
@@ -36,7 +36,7 @@ def preprocess_data(input_path='namadataset_raw/nama_file_dataset.csv', output_p
         print(f"Preprocessing selesai. Data disimpan ke: {output_path}")
         return output_path
     except FileNotFoundError:
-        print(f"Error: File input tidak ditemukan di {input_path}. Pastikan file ada di 'namadataset_raw/'.")
+        print(f"Error: File input tidak ditemukan di {input_path}. Pastikan file ada di 'namadataset_raw/archive (1)/'.")
         return None
     except Exception as e:
         print(f"Terjadi error saat preprocessing: {e}")
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     # Contoh pembuatan file dummy jika belum ada:
     raw_data_dir = 'namadataset_raw'
     output_data_dir = 'namadataset_preprocessing'
-    dataset_filename = 'nama_file_dataset.csv' # Ganti dengan nama file Anda
+    dataset_filename = 'ai_student_impact_dataset.csv' # Ganti dengan nama file Anda
     
     os.makedirs(raw_data_dir, exist_ok=True)
     os.makedirs(output_data_dir, exist_ok=True)
